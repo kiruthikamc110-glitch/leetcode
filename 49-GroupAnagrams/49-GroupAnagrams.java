@@ -1,22 +1,29 @@
-// Last updated: 21/07/2026, 09:09:17
-1import java.util.*;
-2
-3class Solution {
-4    public List<List<String>> groupAnagrams(String[] strs) {
-5        if (strs == null || strs.length == 0) {
-6            return new ArrayList<>();
-7        }
-8        
-9        Map<String, List<String>> map = new HashMap<>();
-10        
-11        for (String str : strs) {
-12            char[] charArray = str.toCharArray();
-13            Arrays.sort(charArray);
-14            String sortedStr = new String(charArray);
-15            map.putIfAbsent(sortedStr, new ArrayList<>());
-16            map.get(sortedStr).add(str);
-17        }
-18        
-19        return new ArrayList<>(map.values());
-20    }
-21}
+// Last updated: 21/07/2026, 09:10:45
+1class Solution {
+2    public String longestPalindrome(String s) {
+3        if (s == null || s.length() < 1) return "";
+4        
+5        int start = 0, end = 0;
+6        
+7        for (int i = 0; i < s.length(); i++) {
+8            int len1 = expandAroundCenter(s, i, i);
+9            int len2 = expandAroundCenter(s, i, i + 1);
+10            
+11            int maxLen = Math.max(len1, len2);
+12            if (maxLen > end - start) {
+13                start = i - (maxLen - 1) / 2;
+14                end = i + maxLen / 2;
+15            }
+16        }
+17        
+18        return s.substring(start, end + 1);
+19    }
+20    
+21    private int expandAroundCenter(String s, int left, int right) {
+22        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+23            left--;
+24            right++;
+25        }
+26        return right - left - 1;
+27    }
+28}
