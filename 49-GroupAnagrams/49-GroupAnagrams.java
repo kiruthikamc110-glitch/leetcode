@@ -1,4 +1,4 @@
-// Last updated: 21/07/2026, 09:18:08
+// Last updated: 21/07/2026, 09:20:26
 1class Solution {
 2    public String multiply(String num1, String num2) {
 3        if ("0".equals(num1) || "0".equals(num2)) {
