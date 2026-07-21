@@ -1,29 +1,32 @@
-// Last updated: 21/07/2026, 09:14:14
+// Last updated: 21/07/2026, 09:18:08
 1class Solution {
-2    public String longestPalindrome(String s) {
-3        if (s == null || s.length() < 1) return "";
-4        
-5        int start = 0, end = 0;
+2    public String multiply(String num1, String num2) {
+3        if ("0".equals(num1) || "0".equals(num2)) {
+4            return "0";
+5        }
 6        
-7        for (int i = 0; i < s.length(); i++) {
-8            int len1 = expandAroundCenter(s, i, i);
-9            int len2 = expandAroundCenter(s, i, i + 1);
-10            
-11            int maxLen = Math.max(len1, len2);
-12            if (maxLen > end - start) {
-13                start = i - (maxLen - 1) / 2;
-14                end = i + maxLen / 2;
-15            }
-16        }
-17        
-18        return s.substring(start, end + 1);
-19    }
-20    
-21    private int expandAroundCenter(String s, int left, int right) {
-22        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
-23            left--;
-24            right++;
-25        }
-26        return right - left - 1;
-27    }
-28}
+7        int m = num1.length();
+8        int n = num2.length();
+9        int[] pos = new int[m + n];
+10        for (int i = m - 1; i >= 0; i--) {
+11            for (int j = n - 1; j >= 0; j--) {
+12                int mul = (num1.charAt(i) - '0') * (num2.charAt(j) - '0');
+13                int p1 = i + j;
+14                int p2 = i + j + 1;
+15                
+16                int sum = mul + pos[p2];
+17                
+18                pos[p1] += sum / 10;
+19                pos[p2] = sum % 10;
+20            }
+21        }
+22        StringBuilder sb = new StringBuilder();
+23        for (int p : pos) {
+24            if (!(sb.length() == 0 && p == 0)) {
+25                sb.append(p);
+26            }
+27        }
+28        
+29        return sb.length() == 0 ? "0" : sb.toString();
+30    }
+31}
