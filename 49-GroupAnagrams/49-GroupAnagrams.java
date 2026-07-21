@@ -1,32 +1,27 @@
-// Last updated: 21/07/2026, 09:20:26
+// Last updated: 21/07/2026, 09:22:20
 1class Solution {
-2    public String multiply(String num1, String num2) {
-3        if ("0".equals(num1) || "0".equals(num2)) {
-4            return "0";
-5        }
+2    public int countSubstrings(String s) {
+3        if (s == null || s.length() == 0) return 0;
+4        
+5        int totalCount = 0;
 6        
-7        int m = num1.length();
-8        int n = num2.length();
-9        int[] pos = new int[m + n];
-10        for (int i = m - 1; i >= 0; i--) {
-11            for (int j = n - 1; j >= 0; j--) {
-12                int mul = (num1.charAt(i) - '0') * (num2.charAt(j) - '0');
-13                int p1 = i + j;
-14                int p2 = i + j + 1;
-15                
-16                int sum = mul + pos[p2];
-17                
-18                pos[p1] += sum / 10;
-19                pos[p2] = sum % 10;
-20            }
-21        }
-22        StringBuilder sb = new StringBuilder();
-23        for (int p : pos) {
-24            if (!(sb.length() == 0 && p == 0)) {
-25                sb.append(p);
-26            }
-27        }
-28        
-29        return sb.length() == 0 ? "0" : sb.toString();
-30    }
-31}
+7        for (int i = 0; i < s.length(); i++) {
+8            totalCount += countPalindromesAroundCenter(s, i, i);
+9            totalCount += countPalindromesAroundCenter(s, i, i + 1);
+10        }
+11        
+12        return totalCount;
+13    }
+14    
+15    private int countPalindromesAroundCenter(String s, int left, int right) {
+16        int count = 0;
+17        
+18        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+19            count++;
+20            left--;
+21            right++;
+22        }
+23        
+24        return count;
+25    }
+26}
