@@ -1,27 +1,24 @@
-# Last updated: 24/09/2026, 20:39:59
+# Last updated: 24/09/2026, 20:40:45
 1class Solution:
-2    def multiply(self, num1, num2):
-3        if num1 == "0" or num2 == "0":
-4            return "0"
+2    def isMatch(self, s, p):
+3        m = len(s)
+4        n = len(p)
 5
-6        result = [0] * (len(num1) + len(num2))
+6        dp = [[False] * (n + 1) for _ in range(m + 1)]
 7
-8        for i in range(len(num1) - 1, -1, -1):
-9            for j in range(len(num2) - 1, -1, -1):
-10
-11                product = int(num1[i]) * int(num2[j])
-12
-13                position = i + j + 1
-14
-15                result[position] += product
+8        dp[0][0] = True
+9
+10        for j in range(1, n + 1):
+11            if p[j - 1] == '*':
+12                dp[0][j] = dp[0][j - 1]
+13
+14        for i in range(1, m + 1):
+15            for j in range(1, n + 1):
 16
-17                result[position - 1] += result[position] // 10
-18
-19                result[position] %= 10
-20
-21        # Remove leading zeros
-22        start = 0
-23        while start < len(result) - 1 and result[start] == 0:
-24            start += 1
-25
-26        return ''.join(map(str, result[start:]))
+17                if p[j - 1] == '?' or p[j - 1] == s[i - 1]:
+18                    dp[i][j] = dp[i - 1][j - 1]
+19
+20                elif p[j - 1] == '*':
+21                    dp[i][j] = dp[i - 1][j] or dp[i][j - 1]
+22
+23        return dp[m][n]
