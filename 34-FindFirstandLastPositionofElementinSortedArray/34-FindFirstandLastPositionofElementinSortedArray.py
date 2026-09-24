@@ -1,4 +1,4 @@
-# Last updated: 24/09/2026, 20:49:59
+# Last updated: 24/09/2026, 20:50:09
 1class Solution:
 2    def groupAnagrams(self, strs):
 3        groups = {}
