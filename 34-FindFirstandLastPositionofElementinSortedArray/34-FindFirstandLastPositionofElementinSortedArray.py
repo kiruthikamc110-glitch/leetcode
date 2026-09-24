@@ -1,22 +1,23 @@
-# Last updated: 24/09/2026, 20:31:13
+# Last updated: 24/09/2026, 20:32:45
 1class Solution:
-2    def countAndSay(self, n):
-3        result = "1"
+2    def combinationSum(self, candidates, target):
+3        result = []
 4
-5        for _ in range(n - 1):
-6            new_result = ""
-7            i = 0
-8
-9            while i < len(result):
-10                count = 1
-11
-12                while i + 1 < len(result) and result[i] == result[i + 1]:
-13                    count += 1
-14                    i += 1
+5        def backtrack(start, current, total):
+6            if total == target:
+7                result.append(current[:])
+8                return
+9
+10            if total > target:
+11                return
+12
+13            for i in range(start, len(candidates)):
+14                current.append(candidates[i])
 15
-16                new_result += str(count) + result[i]
-17                i += 1
-18
-19            result = new_result
-20
-21        return result
+16                backtrack(i, current, total + candidates[i])
+17
+18                current.pop()
+19
+20        backtrack(0, [], 0)
+21
+22        return result
