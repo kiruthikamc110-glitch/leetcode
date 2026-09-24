@@ -1,30 +1,22 @@
-# Last updated: 24/09/2026, 20:29:47
+# Last updated: 24/09/2026, 20:31:13
 1class Solution:
-2    def isValidSudoku(self, board):
-3        rows = [set() for _ in range(9)]
-4        cols = [set() for _ in range(9)]
-5        boxes = [set() for _ in range(9)]
-6
-7        for i in range(9):
-8            for j in range(9):
-9                num = board[i][j]
-10
-11                if num == ".":
-12                    continue
-13
-14                box = (i // 3) * 3 + (j // 3)
+2    def countAndSay(self, n):
+3        result = "1"
+4
+5        for _ in range(n - 1):
+6            new_result = ""
+7            i = 0
+8
+9            while i < len(result):
+10                count = 1
+11
+12                while i + 1 < len(result) and result[i] == result[i + 1]:
+13                    count += 1
+14                    i += 1
 15
-16                if num in rows[i]:
-17                    return False
+16                new_result += str(count) + result[i]
+17                i += 1
 18
-19                if num in cols[j]:
-20                    return False
-21
-22                if num in boxes[box]:
-23                    return False
-24
-25                rows[i].add(num)
-26                cols[j].add(num)
-27                boxes[box].add(num)
-28
-29        return True
+19            result = new_result
+20
+21        return result
