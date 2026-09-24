@@ -1,31 +1,27 @@
-# Last updated: 24/09/2026, 20:39:12
+# Last updated: 24/09/2026, 20:39:59
 1class Solution:
-2    def trap(self, height):
-3        left = 0
-4        right = len(height) - 1
+2    def multiply(self, num1, num2):
+3        if num1 == "0" or num2 == "0":
+4            return "0"
 5
-6        left_max = 0
-7        right_max = 0
-8        water = 0
-9
-10        while left < right:
-11
-12            if height[left] <= height[right]:
-13
-14                if height[left] >= left_max:
-15                    left_max = height[left]
-16                else:
-17                    water += left_max - height[left]
+6        result = [0] * (len(num1) + len(num2))
+7
+8        for i in range(len(num1) - 1, -1, -1):
+9            for j in range(len(num2) - 1, -1, -1):
+10
+11                product = int(num1[i]) * int(num2[j])
+12
+13                position = i + j + 1
+14
+15                result[position] += product
+16
+17                result[position - 1] += result[position] // 10
 18
-19                left += 1
+19                result[position] %= 10
 20
-21            else:
-22
-23                if height[right] >= right_max:
-24                    right_max = height[right]
-25                else:
-26                    water += right_max - height[right]
-27
-28                right -= 1
-29
-30        return water
+21        # Remove leading zeros
+22        start = 0
+23        while start < len(result) - 1 and result[start] == 0:
+24            start += 1
+25
+26        return ''.join(map(str, result[start:]))
