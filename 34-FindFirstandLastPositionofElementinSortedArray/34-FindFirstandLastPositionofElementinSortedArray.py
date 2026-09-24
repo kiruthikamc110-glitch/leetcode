@@ -1,23 +1,14 @@
-# Last updated: 24/09/2026, 20:32:45
+# Last updated: 24/09/2026, 20:38:27
 1class Solution:
-2    def combinationSum(self, candidates, target):
-3        result = []
+2    def firstMissingPositive(self, nums):
+3        n = len(nums)
 4
-5        def backtrack(start, current, total):
-6            if total == target:
-7                result.append(current[:])
-8                return
-9
-10            if total > target:
-11                return
+5        for i in range(n):
+6            while 1 <= nums[i] <= n and nums[nums[i] - 1] != nums[i]:
+7                nums[nums[i] - 1], nums[i] = nums[i], nums[nums[i] - 1]
+8
+9        for i in range(n):
+10            if nums[i] != i + 1:
+11                return i + 1
 12
-13            for i in range(start, len(candidates)):
-14                current.append(candidates[i])
-15
-16                backtrack(i, current, total + candidates[i])
-17
-18                current.pop()
-19
-20        backtrack(0, [], 0)
-21
-22        return result
+13        return n + 1
